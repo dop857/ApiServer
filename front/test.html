@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Title</title>
+    <style>
+
+        .cf:before, .cf:after {
+            content:" ";
+            display: table;
+        }
+        .cf:after {
+            clear: both;
+        }
+        .cf {
+            *zoom: 1;
+        }
+        .menuArchive {
+            list-style:none;
+            margin: 50px auto;
+            width: 800px;
+            width: -moz-fit-content;
+            width: -webkit-fit-content;
+            width: fit-content;
+        }
+        .menuArchive > li {
+            background: #34495e;
+            float: left;
+            position: relative;
+            -webkit-transform: skewX(25deg);
+        }
+        .menuArchive a {
+            display: block;
+            color: #fff;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-family: Arial, Helvetica;
+            font-size: 14px;
+        }
+        .menuArchive li:hover {
+            background: #e74c3c;
+        }
+        .menuArchive > li > a {
+            -webkit-transform: skewX(-25deg);
+            padding: 1em 2em;
+        }
+        /* Dropdown */
+        .submenu {
+            position: absolute;
+            width: 200px;
+            left: 50%;
+            margin-left: -100px;
+            -webkit-transform: skewX(-25deg);
+            -webkit-transform-origin: left top;
+        }
+        .submenu li {
+            background-color: #34495e;
+            position: relative;
+            overflow: hidden;
+        }
+        .submenu > li > a {
+            padding: 1em 2em;
+        }
+        .submenu > li::after {
+            content:'';
+            position: absolute;
+            top: -125%;
+            height: 100%;
+            width: 100%;
+            box-shadow: 0 0 50px rgba(0, 0, 0, .9);
+        }
+        /* Odd stuff */
+        .submenu > li:nth-child(odd) {
+            -webkit-transform: skewX(-25deg) translateX(0);
+        }
+        .submenu > li:nth-child(odd) > a {
+            -webkit-transform: skewX(25deg);
+        }
+        .submenu > li:nth-child(odd)::after {
+            right: -50%;
+            -webkit-transform: skewX(-25deg) rotate(3deg);
+        }
+        /* Even stuff */
+        .submenu > li:nth-child(even) {
+            -webkit-transform: skewX(25deg) translateX(0);
+        }
+        .submenu > li:nth-child(even) > a {
+            -webkit-transform: skewX(-25deg);
+        }
+        .submenu > li:nth-child(even)::after {
+            left: -50%;
+            -webkit-transform: skewX(25deg) rotate(3deg);
+        }
+        /* Show dropdown */
+        .submenu, .submenu li {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .submenu li {
+            transition: .2s ease -webkit-transform;
+        }
+        .menuArchive > li:hover .submenu, .menuArchive > li:hover .submenu li {
+            opacity: 1;
+            visibility: visible;
+        }
+        .menuArchive > li:hover .submenu li:nth-child(even) {
+            -webkit-transform: skewX(25deg) translateX(15px);
+        }
+        .menuArchive > li:hover .submenu li:nth-child(odd) {
+            -webkit-transform: skewX(-25deg) translateX(-15px);
+        }
+
+
+    </style>
+</head>
+<body>
+<iframe src="https://www.google.com/" height="500px" width="500px"></iframe>
+<div id="main">
+    <canvas id="canvasId" width="1200" height="600"></canvas>
+    <div class='screenElementBlock' style='max-width:100px;min-height: 100px; max-height: 100px;  color: #f4ecec; font-size: xx-large;background-image: url(/front/image/btngreen.png); text-align: center;'>
+        <div class='screenElementName' style='font-size:large; display: block; margin-bottom: 0px;position: relative;top: 40px;'>Name</div>
+
+    </div>
+    <div class='screenElementBlock' style='max-width:100px;min-height: 100px; max-height: 100px;  color: #325ddf; font-size: xx-large; text-align: center;outline: 3px solid black;border-radius: 5px;box-sizing: border-box;padding: 5px;'>
+        <div class='screenElementName' style='font-size:large; display: block; '>Name</div>
+        <div class='screenElementInput'><input id="" type="number" name="setvalue" style="width: 90%;height: 30px;font-size: 16pt;"></div>
+        <div class='screenElementButtonInput'style='font-size:small; display: block; border-radius: 3px;padding: 5px;outline: 1px solid blue;background-color: floralwhite;cursor: pointer;'>Применить</div>
+    </div>
+    <div>
+
+    </div>
+
+</div>
+<div id="archiveMenu" class="archiveCreateMenu">
+    <ul class="menuArchive cf">
+        <li>
+            <a href="#">Построить график</a>
+            <ul class="submenu">
+                <li><a href="#">1 час</a></li>
+                <li><a href="#">1 день</a></li>
+                <li><a href="#">1 месяц</a></li>
+
+            </ul>
+        </li>
+
+    </ul>
+</div>
+
+
+TEST HTML
+<script>
+    /*
+    <div id="screenMainHead" className="screenMainHead" style="display:none">
+        <div id="screenMainHeadLeft" className="screenMainHeadLeft" style="">
+            <div></div>
+        </div>
+        <div id="screenMainHeadCenter" className="screenMainHeadCenter" style="">
+            <div>
+                <h2>Наименование</h2>
+                <input id="inputnamescreen" type="text" placeholder="Наименование экрана" style="display: none;">
+            </div>
+            <div id="screenName" className="screenNameBlock" style="">
+
+            </div>
+        </div>
+        <div id="screenMainHeadRight" className="screenMainHeadRight" style="">
+            <div>
+                <h2>Авктивность:</h2>
+                <div id="activeDevice">
+                    <div id="6405b649b535d8a2a4cf77b6" className="activeDeviceElement" style="">
+                        <div>
+                            <div className="nameDevice" style="float:left">m1</div>
+                            <div className="DeviceState">
+                                <div style="color:red">-не в сети</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="6438cc378dae6b90621005fd" className="activeDeviceElement" style="">
+                        <div>
+                            <div className="nameDevice" style="float:left">MaxDevice</div>
+                            <div className="DeviceState">-в сети</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*/
+    //testfetch();
+   // console.log(document.querySelector(".screenElementInputt"));
+    async function  fetcher(urlport,entryPoint,method,data)
+    {
+        let keyAuthor=localStorage.getItem("key")
+        let result;
+        //console.log("In FETCHEr")
+        if(method=="POST")
+        {
+            result=await fetch("http://"+urlport+entryPoint,{method: method,headers:{'Authorization':keyAuthor,'Accept': 'application/json, text/plain, */*','Content-Type': 'application/json'},body: data
+            });
+            result = await result.text();
+            try {
+                result = JSON.parse(result);
+            }
+            catch (e)
+            {
+                console.log(e)
+            }
+
+        }
+        else
+        {
+            result=await fetch("http://"+urlport+entryPoint,{headers:{'Authorization':keyAuthor}});
+            result = await result.text();
+            result=JSON.parse(result);
+        }
+
+        return result;
+    }
+    archiveData="";
+
+
+
+
+
+
+
+    async function init()
+    {
+        archiveData= await fetcher("10.4.5.46:80","/programPack/archive?id=6438ccd68dae6b90621005ff&period=600000&dateStart=1681960964000","GET","")
+        console.log(archiveData)
+        archiveData=archiveData.archive;
+
+        console.log(archiveData["0"])
+        const canvas = document.getElementById("canvasId");
+        const ctx=canvas.getContext("2d");
+        let offset = 0;
+
+        function draw() {
+
+            pointsNumber=archiveData.length
+            aD=archiveData;
+
+            fieldDataX=100;//размер под вычет для поля данных оси Х
+            fieldDataY=50;//размер под вычет для поля данных оси Y
+
+            graphHeight=canvas.height-fieldDataX;//Высота поля отрисовки графика
+            graphWidth=canvas.width-fieldDataY;//Ширина поля отрисовки графика
+
+            stepForDataX=10;//количество делений по Х
+            stepForDataY=10;//количество делений по У
+
+            console.log("length")
+            console.log(pointsNumber)
+            mnozhDateToPx=graphWidth/pointsNumber;//множитель на который нужно умножать номер точки для получения X координаты в пикселях
+            //Найти минимальное и максимальное значение числовых значений для получения диапазона
+            maxValue=Number(aD["0"].dec);
+            minValue=Number(aD["0"].dec);
+            for(i=0;i<pointsNumber;i++)
+            {
+                if(aD[i].dec>maxValue)maxValue=Number(aD[i].dec);
+                if(aD[i].dec<minValue)minValue=Number(aD[i].dec);
+
+            }
+
+            maxDate=Number(aD["0"].date);
+            minDate=Number(aD["0"].date);
+            for(i=0;i<pointsNumber;i++)
+            {
+                if(aD[i].date>maxValue)maxDate=Number(aD[i].date);
+                if(aD[i].date<minValue)minDate=Number(aD[i].date);
+
+            }
+            deltaDate=maxDate-minDate;
+
+            console.log("max min");
+            console.log(maxValue);
+            console.log(minValue);
+            deltaValue=maxValue-minValue;
+
+            mnozhValueToPx=graphHeight/deltaValue;
+
+
+
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //Отрисовка кривой данных
+            ctx.beginPath();
+            ctx.lineWidth = 1; // толщина линии
+            ctx.moveTo(0+fieldDataY, (graphHeight-((Number(aD["0"].dec)-Number(minValue))*mnozhValueToPx)));
+            for(i=0;i<pointsNumber;i++)
+            {
+                xP=i*mnozhDateToPx;
+                yP=graphHeight-((Number(aD[i].dec)-Number(minValue))*mnozhValueToPx);
+                xP=xP+fieldDataY;//добавить отступы для полей данных по Х для Y не добавляется , график сужается и внизу остается место под Y
+
+                ctx.lineTo(xP, yP);
+            }
+            ctx.stroke();
+
+            //Отрисовка осей
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.moveTo(0+fieldDataY,canvas.height-fieldDataX);
+            ctx.lineTo(canvas.width, canvas.height-fieldDataX);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.moveTo(0+fieldDataY,canvas.height-fieldDataX);
+            ctx.lineTo(fieldDataY, 0);
+            ctx.stroke();
+
+            //отрисовка наименований осей По Х
+            ctx.beginPath();
+            ctx.moveTo(0+fieldDataY,canvas.height-fieldDataX);
+            xstep=graphWidth/stepForDataX;
+            stepDate=deltaDate/stepForDataX;
+            for(i=0;i<stepForDataX;i++)
+            {
+                ctx.beginPath();
+                ctx.setLineDash([2, 10]);
+                ctx.lineWidth = 0.5;
+                ctx.moveTo((i*xstep)+fieldDataY,canvas.height-fieldDataX+2);
+                ctx.lineTo((i*xstep)+fieldDataY, 0);
+                ctx.stroke();
+
+                date=new Date(minDate+(stepDate*i));
+                console.log( )
+                ctx.save()
+                ctx.translate( (i*xstep)+fieldDataY,canvas.height-fieldDataX+30)
+                ctx.rotate(0.2)
+                //ctx.fillText(date.toISOString(), (i*xstep)+fieldDataY, canvas.height-fieldDataX+50);
+                ctx.fillText(date.toISOString(), 0, 0);
+                ctx.restore();
+            }
+
+            //отрисовка наименований осей По Y
+            ctx.beginPath();
+            ctx.moveTo(10,canvas.height-fieldDataX);
+            ystep=graphHeight/stepForDataY;
+            stepValue=deltaValue/stepForDataY;
+            console.log(stepValue)
+            for(i=0;i<stepForDataY;i++)
+            {
+                ctx.beginPath();
+                ctx.setLineDash([2, 10]);
+                ctx.lineWidth = 0.5;
+                ctx.moveTo(fieldDataY-2,canvas.height-(fieldDataX+(i*stepValue*mnozhValueToPx)));
+                ctx.lineTo(canvas.width, canvas.height-(fieldDataX+(i*stepValue*mnozhValueToPx)));
+                ctx.stroke();
+
+                valueText=minValue+stepValue*i;
+                console.log( )
+                ctx.save()
+                ctx.translate( fieldDataY-50,canvas.height-(fieldDataX+(i*stepValue*mnozhValueToPx)))
+                //ctx.rotate(0.2)
+                //ctx.fillText(date.toISOString(), (i*xstep)+fieldDataY, canvas.height-fieldDataX+50);
+                ctx.fillText(Math.round(valueText), 0, 0);
+                ctx.restore();
+            }
+
+
+
+        }
+
+        function march() {
+            offset++;
+            if (offset > 16) {
+                offset = 0;
+            }
+            draw();
+            //setTimeout(march, 20);
+        }
+
+        march();
+    }
+    init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    val=Number(32000);
+    buttonElement=document.querySelector(".screenElementInput");
+    inputel=buttonElement.querySelector("input")
+
+    buttonElement.addEventListener("click",()=>{
+        prog={message:""};
+        prog.message="009900000006010600020001"
+        message=prog.message.match(/^..............(..)(.*)/i)
+        if(message[1]=="06" || message[1]=="05")
+        {
+            message=prog.message.match(/^(.*)(....)$/i)
+        }
+        console.log(message)
+        console.log(inputel)
+        numhex=Number(inputel.value).toString(16)
+        console.log("numhexNumber")
+        console.log(numhex)
+        r="";
+        i=Number(4-(numhex.length%4));
+        console.log(i)
+        while(i>0 && i<4)
+        {
+            r=r+"0";
+            i--;
+        }
+        numhex=r+numhex;
+        message=message[1]+numhex;
+        console.log(numhex)
+        console.log(message)
+
+
+
+        number="16.5";
+
+        str=number;
+
+        Mathem=
+            {
+                float2bin(str)
+                {
+                    var text = str, no, noa = [0], tmp, i, j, k, l, obj = {};
+
+                    no = parseFloat(text);
+                    text = text.toLowerCase();
+
+                    obj.TEXT = text;
+                    obj.sign = ( text.indexOf('-') >= 0 ) ? '-' : '+';
+                    obj.e = ( text.indexOf('e') >= 0 ) ? 'e' + obj.sign : '';
+                    obj.TEXT_FLOAT = (obj.e) ? text.split(obj.e)[0] : text;
+                    obj.TEXT_EXP = (obj.e) ? text.split(obj.e)[1] : '0';
+                    text = obj.TEXT_FLOAT;
+                    tmp = text.split('.');
+                    obj.Num = Math.abs(tmp[0]);
+                    obj.Dec = (+( '0.' + ((tmp[1]) ? tmp[1] : '0' )));
+                    obj.Exp = (obj.e) ? parseInt( obj.TEXT.split( obj.e )[1], 10) : 127;
+                    obj.Exp += (obj.e && obj.sign === "+") ? 127 : 0;
+                    text = (obj.e) ? text.split(obj.e)[0] : text;
+
+                    noa[0] = ( obj.sign === '-' ) ? 1 : 0;
+
+                    tmp = obj.Num;
+                    obj.Num = (obj.Num);
+                    no = obj.Dec;
+                    tmp = tmp.toString(2) + '.';
+                    for ( i = tmp.length; (i < 32 && no > 0); i++ ) {
+                        no *= 2;
+                        text = ('' + no).split('.')[0];
+                        no -= (+text);
+                        tmp += text;
+                    }
+                    j = 0;
+                    i = tmp.indexOf('.');
+                    text = tmp;
+                    l = i;
+                    if (obj.Num > 0) {
+                        for (i--, k = i; i > -1; i--) {
+                            if (tmp[i] === '1') {
+                                k = i;
+                            }
+                        }
+                        j = (l - 1) - k;
+                    }
+                    else {
+                        for (i++, k = i; i < tmp.length; i++) {
+                            if (tmp[i] === '1') {
+                                k = i - 1;
+                                j = i - l;
+                                i = tmp.length;
+                            }
+                        }
+                        j = -j;
+                    }
+
+                    no = (obj.e) ? 0 : j;
+                    obj.Exp += no;
+                    tmp = obj.Exp.toString(2);
+                    for ( i = 8, j = (tmp.length - 1); i > 0; i--, j-- ) {
+                        noa[ i ] = ( tmp[ j ] ) ? tmp[j] : '0';
+                    }
+
+                    tmp = text.replace('.', '');
+                    for ( i = 9, j = k + 1; i < 32; i++, j++ ) {
+                        noa[i] = (tmp[j]) ? tmp[j] : '0';
+                    }
+                    console.log(noa.join(""))
+                    return noa.join("");
+                },
+                float2hex(str)
+                {
+                    return this.bin2hex(this.float2bin(str));
+                },
+                bin2hex(str)
+                {
+                    return parseInt(str, 2).toString(16).toUpperCase();
+                }
+            }
+
+
+        console.log(inputel.value)
+        console.log(Mathem.float2hex(inputel.value))
+    })
+
+    /*fetchStationsJSON().then((result)=>
+    {
+        console.log(result);
+        document.getElementById()
+    });
+
+    /*fetch('http://127.0.0.1:3000/receiver/station/')
+        .then(res => res.json())
+        .then(json => console.log(json))*/
+</script>
+
+</body>
+</html>

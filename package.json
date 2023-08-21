@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dop857/servNode.git"
+  },
+  "author": "d-is",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dop857/servNode/issues"
+  },
+  "homepage": "https://github.com/dop857/servNode#readme",
+  "dependencies": {
+    "connect-sse": "^1.2.0",
+    "cors": "^2.8.5",
+    "crc-32": "^1.2.2",
+    "express": "^4.18.2",
+    "express-generator": "^4.2.0",
+    "express-longpoll": "^0.0.6",
+    "mkdirp": "^2.1.3",
+    "mongodb": "^5.1.0",
+    "mongoose": "^7.0.0"
+  }
+}

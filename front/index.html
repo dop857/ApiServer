@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="front\css\style.css">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>Меридиан-Скада</title>
+		<script src="front/js/html2canvas.min.js"></script>
+
+	</head>
+		<body>
+		<div id="archiveMenu" class="archiveCreateMenu" style="display:none">
+			<ul class="menuArchive cf">
+				<li>
+					<a href="#">Построить график</a>
+					<ul class="submenu">
+						<li><a id="archive1h" href="#">1 час</a></li>
+						<li><a id="archive1d" href="#">1 день</a></li>
+						<li><a id="archive1m" href="#">1 месяц</a></li>
+						<li><a id="archiveCustom" href="#">По дате</a></li>
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+		<div id="ccPPMenu" class="archiveCreateMenu" style="display:none">
+			<ul class="menuArchive cf">
+				<li>
+					<a >Меню</a>
+					<ul class="submenu">
+						<li><a id="ccPPEnable" >Активировать</a></li>
+						<li><a id="ccPPDisable" >Деактивировать</a></li>
+						<li><a id="ccPPTime" >Тайминги</a></li>
+
+					</ul>
+
+				</li>
+
+
+			</ul>
+		</div>
+		<div id="screenChooseMenu" class="screenChooseMenu" style="display:none">
+			<div class="screenChooseMenuHead">
+
+			</div>
+			<div class="screenChooseMenuMiddle">
+				<div class="screenChooseMenuMiddleCenter">
+
+				</div>
+			</div>
+		</div>
+		<div id="canvasWithMenu" class="fullscreenDialogBox" style="display:none;position:absolute;z-index:1;width: 100%;height: 100%;">
+			<div class="fullscreenDialogBoxWindow" style="width:100%;height: 30px;left:0px; top:0px" >
+				<div style="width: 100%;height: 100%;">
+					<div class="fullscreenDialogBoxHeader"></div>
+					<div id="closeButtonCanvas" class="Button" style="float: right;background-color: red;color: white;cursor: pointer;right: 0px;position: absolute;top: 0px;padding: 5px;min-width: 20px;text-align: center;">Х</div>
+				</div>
+				<canvas id="canvasId" width="1200" height="600" ></canvas>
+
+
+			</div>
+		</div>
+		<div id="archiveCustomDialogBox" class="fullscreenDialogBox" style="display:none;position:absolute;z-index:1;width: 100%;height: 100%;">
+			<div class="fullscreenDialogBoxWindow" >
+				<div style="text-align: right;width: 100%;height: 30px;"><div class="fullscreenDialogBoxHeader"></div><button class="closeDialog">X</button></div>
+				<div>Введите параметры построения</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Дата и время начала построения</div><input type="datetime-local" name="dateStart" required placeholder="Дата начала построения"></div>
+				<div style="text-align: left;background-color: #455e7e"><div>Дата и время окончания построения</div><input type="datetime-local" name="dateEnd" required placeholder="Дата окнчания построения"></div>
+				<button id="archiveCustomButtonSend">Сформировать график</button>
+			</div>
+		</div>
+		<div id="PPChangeTimeBox" class="fullscreenDialogBox" style="display:none;position:absolute;z-index:1;width: 100%;height: 100%;">
+			<div class="fullscreenDialogBoxWindow" style="height: 820px;top:3%;" >
+				<div style="text-align: right;width: 100%;height: 30px;"><div class="fullscreenDialogBoxHeader"></div><button class="closeDialog">X</button></div>
+				<div id="ppId"></div>
+				<div>Введите параметры</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Время записи в архив(мс)</div><input type="text" name="periodArchive" required placeholder="">
+
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Время периодического опроса(мс)</div><input type="text" name="periodTime" required placeholder="">
+
+				</div>
+				<button id="PPChangeTimeBoxButtonSend">Выполнить</button>
+			</div>
+		</div>
+		<div id="addProgramPackInDevice" class="fullscreenDialogBox" style="display:none;position:absolute;z-index:1;width: 100%;height: 100%;">
+			<div class="fullscreenDialogBoxWindow" style="height: 820px;top:3%;" >
+				<div style="text-align: right;width: 100%;height: 30px;"><div class="fullscreenDialogBoxHeader"></div><button class="closeDialog">X</button></div>
+				<div>Введите параметры</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Станция опроса</div><input type="text" stationId="" name="station" required placeholder="Станция опроса..."><button class="searchStationForDialog">...</button>
+					<div class="popupList" style=""></div>
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Устройство</div><input type="text" deviceId="" name="device" required placeholder="Устройство..."><button class="searchDeviceForDialog">...</button>
+					<div class="popupList" style=""></div>
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Протокол сообщения</div><input type="text" name="type" disabled required placeholder="ModbusTCP"><button class="searchDeviceForDialog">...</button>
+					<div class="popupList" style=""></div>
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Сообщение</div><input type="text" name="message" required placeholder="Сообщение...">
+
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Наименование</div><input type="text" name="nameData" required placeholder="Наименование...">
+
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Единицы измерения</div><input type="text" name="units" required placeholder="Единицы измерения...">
+
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Архивировать значение каждые(мс)</div><input type="number" min="50" name="archivePeriod" required placeholder="Значение в миллисекундах.">
+
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Обновлять значение каждые(мс)</div><input type="number" min="50" name="period" required placeholder="Значение в миллисекундах.">
+
+				</div>
+				<div style="text-align: left;background-color: #455e7e"><div>Тип переменной</div><input type="text"  typeVariable="" name="typeVariable" required placeholder="Тип..."><button class="searchTypeVariableForDialog">...</button>
+					<div class="popupList" style=""></div>
+				</div>
+
+				<button id="addProgramPackInDeviceButtonSend">Добавить</button>
+			</div>
+		</div>
+		<div class="wrapper">
+			<div class="header">
+				<div class="logo"><a href="">Меридиан<span class="black"> Скада</span><span class="gray"></span></a><p>Система сбора данных с полевого оборудования</p></div>
+				<ul id="menu_nav_block" class="nav">
+					<ul id="menu_right" class="nav">
+						<li><a href="#">Сервис</a></li>
+						<li><a href="#">Администрирование</a></li>
+						<li><a href="#">О проекте</a></li>
+					</ul>
+				</ul>
+			</div>
+			<div class="content">
+				<div class="rightCol">
+					<ul  class="rightNav">
+						<li><a href="#">Natus error sit voluptatem</a></li>
+
+					</ul>
+					<div class="block">
+						<h3>Lorem ipsum dolor sit</h3>
+						<p><i>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</i></p>
+						<p><a href="#" class="more">Read more »</a></p>
+					</div>
+				</div>
+				<div id="mainBlock" class="main">
+					<div id="stationsView">
+						
+					</div>
+					<h1>What we do</h1>
+					<p>Lorem ipsum dolor sit amet, <a href="#" title="link">consectetur adipisicing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in <b title="bold">reprehenderit in voluptate velit</b> esse cillum dolore eu fugiat nulla pariatur. <i title="italic">Excepteur sint occaecat</i> cupidatat non proident, sunt in culpa qui officia deserunt.</p>
+					<!--Изображения-->
+					<h2>Images</h2>
+					<p><img src="images/img1.jpg"><img src="images/img2.jpg"><img src="images/img3.jpg"></p>
+					<!--Списки и определения-->
+					<h2>Lists and Descriptions</h2>
+					<div class="row">
+						<div class="col">
+							<ul>
+								<li>Sed ut perspiciatis unde omnis iste</li>
+								<li>Lorem ipsum dolor sit amet</li>
+								<li>At vero eos et accusamus et iusto</li>
+								<li>Et harum quidem rerum facilis</li>
+							</ul>
+						</div>
+						<div class="col">
+							<ol>
+								<li>Sed ut perspiciatis unde omnis iste</li>
+								<li>Lorem ipsum dolor sit amet</li>
+								<li>At vero eos et accusamus et iusto</li>
+								<li>Et harum quidem rerum facilis</li>						
+							</ol>
+						</div>
+						<div class="col">
+							<dl>
+								<dt>Sed ut perspiciatis unde omnis iste</dt>
+								<dd>Lorem ipsum dolor sit amet</dd>
+								<dt>At vero eos et accusamus et iusto</dt>
+								<dd>Et harum quidem rerum facilis</dd>
+							</dl>
+						</div>
+					</div>
+					<!--Таблица-->
+					<h2>Table</h2>					
+					<table class="bordered">
+						<thead>
+							<tr>
+								<th>Purcus</th>
+								<th>Hantis</th>
+								<th>Mastron</th>
+								<th>Jevicon</th>
+								<th>Language</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Gitsome</td>
+								<td>Some one</td>
+								<td>Take mose</td>
+								<td>Likbes</td>
+								<td>Racounter</td>
+							</tr>
+							<tr>
+								<td>Linkage</td>
+								<td>Fordor</td>
+								<td>Miad ron me</td>
+								<td>Diablo core</td>
+								<td>Tidbade</td>
+							</tr>
+							<tr>
+								<td>Hicura</td>
+								<td>Warecom</td>
+								<td>Xamicon</td>
+								<td>Yamama</td>
+								<td>Udoricano</td>
+							</tr>
+							<tr>
+								<td>Lavistaro</td>
+								<td>Micanorta</td>
+								<td>Ebloconte ma</td>
+								<td>Quad ri port</td>
+								<td>Timesquer</td>
+							</tr>
+						</tbody>
+					</table>
+					<!--Формы-->
+					<h2>Forms</h2>
+					<form>
+						<div class="row">
+							<label>Text:</label>
+							<input type="text" placeholder="Input type text">
+						</div>
+						<div class="row">
+							<label>Select:</label>
+							<select>
+								<option>Option</option>
+								<option>Option 1</option>
+								<option>Option 2</option>
+								<option>Option 3</option>
+							</select>
+						</div>
+						<div class="row">
+							<label><input type="checkbox">Sed ut perspiciatis unde omnis iste natus</label>
+							<label><input type="radio" name="radiobutton" value="radiobutton">Lorem ipsum dolor sit amet, consectetur</label>
+						</div>
+						<div class="row">
+							<label>Textarea:</label>
+							<textarea></textarea>
+						</div>
+						<div class="row">
+							<button type="submit">Button</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="footer">
+				<p>&copy; Footer content <a href="#">Link footer</a></p>
+			</div>
+		</div>
+		
+		<script>
+			//console.log("menu_nav");
+			//menu_nav_block=document.getElementById("menu_nav_block");
+			insert_string="";
+			//for(menu_n in menu_nav["menu_nav"])
+			{
+			//	console.log(menu_nav["menu_nav"][menu_n]);
+				//insert_string=insert_string+"<li><a href="+menu_nav["menu_nav"][menu_n]["ref"]+">"+menu_nav["menu_nav"][menu_n]["name"]+"</a></li>"
+			}
+			//console.log(menu_nav_block);
+			//menu_nav_block.innerHTML=insert_string;
+		</script>
+		
+	</body>
+	<script src="front/js/index.js"></script>
+</html>
