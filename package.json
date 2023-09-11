@@ -24,7 +24,9 @@
     "express-generator": "^4.2.0",
     "express-longpoll": "^0.0.6",
     "mkdirp": "^2.1.3",
+    "mongod-backup": "^1.0.6",
     "mongodb": "^5.1.0",
+    "mongodb-backup-toolkit": "^1.0.8",
     "mongoose": "^7.0.0"
   }
 }

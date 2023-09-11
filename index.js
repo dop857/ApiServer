@@ -35,43 +35,52 @@ async function StartSystem()
 {
 
     //прочитать конфигурацию из файла "listenPort": номер порта,"databaseAddress": ip адрес базы данных,"databasePort": Порт Базы данных,"timeClearLog": время сохранения логов,"frontPath": путь к главному файлу фронта
-    await fs.readFile('./config.json', {encoding: 'utf8'}).then(async (filedata) => {
+    await fs.readFile('./config.json', {encoding: 'utf8'}).then(async (filedata) =>
+    {
         config = JSON.parse(filedata);
         port = config.listenPort;
-        await modeldb.connectMongo(config.databaseAddress, config.databasePort, "scada").then(() => {
+        await modeldb.connectMongo(config.databaseAddress, config.databasePort, "scada").then(async () => {
             if (modeldb.clientDB == "false")
             {
                 console.log("Database Connect Error");
             }
             else
             {
-                allSystemReady = 1;
-                //инициализация ошибок из базы данных
-                Errors.Constructor().then((errors) =>
-                {
-                    //инициализация констант из базы данных
-                    Constant.Constructor().then(() =>
-                    {
+                let initOk=await modeldb.IsInitOK();
+                if(initOk==undefined)
+                    await modeldb.InitDatabase();
+                else {
+                    console.log("PRE INIT")
 
-                        Constant.SetFrontPath(String(config.frontPath));
-                        let path = String("./");
+                    //if(prom==null)await modeldb.InitDatabase();
+                    //
+                    //инициализация ошибок из базы данных
+                    console.log("AFTER INIT")
+                    Errors.Constructor().then((errors) => {
+                        //инициализация констант из базы данных
+                        Constant.Constructor().then(() => {
 
-                        //Инициализация системы логирования
-                        Counters.Construct("GetReq", {autoResetMS: 10000});
-                        Counters.Construct("PostReq", {autoResetMS: 10000});
-                        Log.Construct(1000, "Server", path, config.timeClearLog);
-                        Log.emitter.on("loggerUpdateExe", () => {
-                            Log.add(Counters.Get("GetReq"), "GetReq");
-                            Log.add(Counters.Get("PostReq"), "PostReq");
-                        });
+                            Constant.SetFrontPath(String(config.frontPath));
+                            let path = String("./");
 
-                        //Старт
-                        app.listen(port, () => {
-                            console.log("Start");
-                        });
+                            //Инициализация системы логирования
+                            Counters.Construct("GetReq", {autoResetMS: 10000});
+                            Counters.Construct("PostReq", {autoResetMS: 10000});
+                            Log.Construct(1000, "Server", path, config.timeClearLog);
+                            Log.emitter.on("loggerUpdateExe", () => {
+                                Log.add(Counters.Get("GetReq"), "GetReq");
+                                Log.add(Counters.Get("PostReq"), "PostReq");
+                            });
+
+                            //Старт
+                            app.listen(port, () => {
+                                console.log("Start");
+                            });
+                        })
+
                     })
-
-                })
+                    allSystemReady = 1;
+                }
             }
         }).catch((e) => {
             console.log(e);

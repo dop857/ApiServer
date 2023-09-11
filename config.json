@@ -1,7 +1,7 @@
 {
   "listenPort": 3000,
-  "databaseAddress": "10.4.5.46",
-  "databasePort": 27717,
+  "databaseAddress": "127.0.0.1",
+  "databasePort": 27017,
   "timeClearLog": "2 Day",
   "frontPath": "/front/index.html"
 }

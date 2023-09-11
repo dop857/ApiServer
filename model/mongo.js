@@ -1,4 +1,6 @@
 const {MongoClient} = require("mongodb");
+const { restore } = require("mongod-backup");
+const {spawn} = require("child_process");
 
 const dataBaseModel=
     {
@@ -6,12 +8,14 @@ const dataBaseModel=
         "users_init":"false",
         "errorMessage":"",
         "link":"no",
-
+        "fullurl":"",
+        "onlyURL":"",
         async connectMongo(url,port,dbname){
             let MongoClient = require('mongodb').MongoClient;
 
             try {
-                let fullurl='mongodb://'+url+':'+port+'/';
+                this.fullurl='mongodb://' + url + ':' + port+'/scada' ;
+                this.onlyURL=url;
                 await MongoClient.connect('mongodb://'+url+':'+port+'/',{"serverSelectionTimeoutMS":"100","maxIdleTimeMS":60000}).then((cl)=>
                 {
                     this.clientDB=cl;
@@ -92,6 +96,65 @@ const dataBaseModel=
 
             return true;
         },
+        async InitDatabase()
+        {
+            //`--archive=${archivePath}`,
+
+           //let prom = await restore("", "/model/archive/backup-280623.gz");
+            {
+                const child = spawn("mongorestore", [
+                    `--host=${this.onlyURL}`,
+                    `--archive=./model/archive/install.gz`,
+                    "--gzip",
+                ]);
+
+                return new Promise((resolve, reject) => {
+                    child.stdout.on("data", (data) => {
+                        console.log("stdout:\n", data);
+                    });
+                    child.stderr.on("data", (data) => {
+                        console.log("stderr:\n", Buffer.from(data).toString());
+                    });
+                    child.on("error", (error) => {
+                        console.log("error:\n", error);
+                        reject(error);
+                    });
+                    child.on("exit", (code, signal) => {
+                        if (code) {
+                            console.log("Process exit with code:", code);
+                            reject(new Error(`Process exit with code: ${code}`));
+                        } else if (signal) {
+                            console.log("Process killed with signal:", signal);
+                            reject(new Error(`Process killed with signal: ${signal}`));
+                        } else {
+                            console.log("Restore is successful ✅");
+                            resolve("Restore is successful ✅");
+                        }
+                    });
+                });
+            }
+
+        },
+        async IsInitOK()
+        {
+            let col=this.link.collection('schemeRequest');
+            let result;
+            try {
+                result=await col.findOne({})
+            }
+            catch {
+                (() => {
+                    result=null;
+                })
+            }
+
+            console.log("IsInitOK")
+            console.log(result)
+            return new Promise((resolve, reject) => {
+                if(result!=undefined && result!=null)resolve("ok")
+                else resolve(undefined)
+            })
+        }
 
 
 

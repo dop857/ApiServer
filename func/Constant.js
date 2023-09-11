@@ -12,6 +12,10 @@ Constant=
         let prom;
         prom=await col.findOne({name:"accessGroup"}).then((aResult)=> {
             this.accessGroup=aResult.accessGroup;
+        }).catch((error)=>{
+            console.log(error)
+            modeldb.InitDatabase().then((m)=>{{console.log(m)}}).catch((e)=>{console.log(e)})
+
         });
         prom=await col.findOne({name:"typeValue"}).then((aResult)=> {
             this.typeValue=aResult.typeValue;
